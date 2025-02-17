@@ -80,7 +80,7 @@ namespace L20250217
 
         public void ProcessInput()
         {
-            Input.Process();
+            Input.InputInstance.Process();
         }
 
         protected void Update()
