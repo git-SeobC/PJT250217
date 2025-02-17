@@ -1,18 +1,18 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PJT250217
+namespace L20250217
 {
-    public class Goal
+    public class Goal : GameObject
     {
-        public int x;
-        public int y;
-
-        public void Collide() { }
-        public void Goalin() { }
-
+        public Goal(int inX, int inY, char inShape)
+        {
+            X = inX;
+            Y = inY;
+            Shape = inShape;
+        }
     }
 }
