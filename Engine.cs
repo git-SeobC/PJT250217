@@ -27,6 +27,8 @@ namespace L20250217
 
         protected ConsoleKeyInfo keyInfo;
 
+        public World world;
+
         public void Load()
         {
             //file에서 로딩
@@ -80,7 +82,7 @@ namespace L20250217
 
         public void ProcessInput()
         {
-            Input.InputInstance.Process();
+            Input.Process();
         }
 
         protected void Update()
@@ -104,8 +106,5 @@ namespace L20250217
                 Render();
             }
         }
-
-
-        public World world;
     }
 }

@@ -12,7 +12,6 @@ namespace L20250217
         public int Y;
         public char Shape; // Mesh, Sprite
 
-
         public virtual void Update()
         {
 
@@ -23,8 +22,6 @@ namespace L20250217
             // x,y 위치에 shape 출력
             Console.SetCursorPosition(X, Y);
             Console.Write(Shape);
-
         }
-
     }
 }
