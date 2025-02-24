@@ -11,6 +11,9 @@ namespace L20250217
         public int X;
         public int Y;
         public char Shape; // Mesh, Sprite
+        public int orderLayer;
+        public bool isTrigger = false;
+        public bool isCollide = false;
 
         public virtual void Update()
         {
@@ -22,6 +25,20 @@ namespace L20250217
             // x,y 위치에 shape 출력
             Console.SetCursorPosition(X, Y);
             Console.Write(Shape);
+        }
+
+        public bool PredictCollision(int newX, int newY)
+        {
+            for (int i = 0; i < Engine.Instance.world.GetGameObjects.Count; ++i)
+            {
+                if (Engine.Instance.world.GetGameObjects[i].isCollide == true &&
+                    Engine.Instance.world.GetGameObjects[i].X == newX &&
+                    Engine.Instance.world.GetGameObjects[i].Y == newY)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }

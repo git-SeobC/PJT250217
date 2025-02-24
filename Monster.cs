@@ -16,6 +16,8 @@ namespace L20250217
             X = inX;
             Y = inY;
             Shape = inShape;
+            orderLayer = 5;
+            isTrigger = true;
         }
         public override void Update()
         {
@@ -23,19 +25,23 @@ namespace L20250217
 
             if (Direction == 0)
             {
-                Y--;
+                if (!PredictCollision(X, Y - 1))
+                    Y--;
             }
             if (Direction == 1)
             {
-                Y++;
+                if (!PredictCollision(X, Y + 1))
+                    Y++;
             }
             if (Direction == 2)
             {
-                X--;
+                if (!PredictCollision(X - 1, Y))
+                    X--;
             }
             if (Direction == 3)
             {
-                X++;
+                if (!PredictCollision(X + 1, Y))
+                    X++;
             }
         }
     }
