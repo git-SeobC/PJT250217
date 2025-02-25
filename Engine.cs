@@ -1,4 +1,5 @@
 using PJT250217;
+using System.Data;
 using System.Text;
 
 namespace L20250217
@@ -8,6 +9,9 @@ namespace L20250217
         private Engine() { }
 
         static Engine instance;
+
+        static public char[,] backBuffer = new char[20, 40];
+        static public char[,] frontBuffer = new char[20, 40];
 
         static public Engine Instance
         {
@@ -133,18 +137,45 @@ namespace L20250217
 
         protected void Render()
         {
-            Console.Clear();
+            // io 가 제일 느림, 특히 모니터 출력이 제일 느림
+            // Console.Clear(); 화면 지우는 것 또한 작업이 느림
             world.Render();
-        }
 
+            for (int Y = 0; Y < 20; ++Y)
+            {
+                for (int X = 0; X < 40; ++X)
+                {
+                    if (Engine.frontBuffer[Y, X] != Engine.backBuffer[Y, X])
+                    {
+                        Engine.frontBuffer[Y, X] = Engine.backBuffer[Y, X];
+                        Console.SetCursorPosition(X, Y);
+                        Console.Write(frontBuffer[Y, X]);
+                    }
+                }
+            }
+        }
 
         public void Run()
         {
+            float frameTime = 1000.0f / 60.0f;
+            double elapsedTime = 0.0;
+
+            Console.CursorVisible = false;
             while (isRunning)
             {
-                ProcessInput();
-                Update();
-                Render();
+                Time.Update();
+                //if (elapsedTime >= frameTime)
+                //{
+                    ProcessInput();
+                    Update();
+                    Render();
+                    Input.ClearInput();
+                    //elapsedTime = 0;
+                //}
+                //else
+                //{
+                //    elapsedTime += Time.deltaTime;
+                //}
             }
         }
     }

@@ -19,29 +19,47 @@ namespace L20250217
             orderLayer = 5;
             isTrigger = true;
         }
+
+        private double elapsedTime = 0.0;
+
         public override void Update()
         {
-            int Direction = rand.Next(0, 4);
-
-            if (Direction == 0)
+            if (elapsedTime > 500.0f)
             {
-                if (!PredictCollision(X, Y - 1))
-                    Y--;
+                elapsedTime = 0.0f;
+                int Direction = rand.Next(0, 4);
+                if (Direction == 0)
+                {
+                    if (!PredictCollision(X, Y - 1))
+                    {
+                        Y--;
+                    }
+                }
+                if (Direction == 1)
+                {
+                    if (!PredictCollision(X, Y + 1))
+                    {
+                        Y++;
+                    }
+                }
+                if (Direction == 2)
+                {
+                    if (!PredictCollision(X - 1, Y))
+                    {
+                        X--;
+                    }
+                }
+                if (Direction == 3)
+                {
+                    if (!PredictCollision(X + 1, Y))
+                    {
+                        X++;
+                    }
+                }
             }
-            if (Direction == 1)
+            else
             {
-                if (!PredictCollision(X, Y + 1))
-                    Y++;
-            }
-            if (Direction == 2)
-            {
-                if (!PredictCollision(X - 1, Y))
-                    X--;
-            }
-            if (Direction == 3)
-            {
-                if (!PredictCollision(X + 1, Y))
-                    X++;
+                elapsedTime += Time.deltaTime;
             }
         }
     }

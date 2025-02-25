@@ -8,18 +8,29 @@ namespace PJT250217
 {
     public class Input
     {
-        public Input() { }
+        public Input()
+        {
+
+        }
 
         protected static ConsoleKeyInfo keyInfo;
 
         public static void Process()
         {
-            keyInfo = Console.ReadKey();
+            if (Console.KeyAvailable)
+            {
+                keyInfo = Console.ReadKey(true);
+            }
         }
 
         public static bool GetKeyDown(ConsoleKey key)
         {
             return (keyInfo.Key == key);
+        }
+
+        public static void ClearInput()
+        {
+            keyInfo = new ConsoleKeyInfo();
         }
     }
 }
