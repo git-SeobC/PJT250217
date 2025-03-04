@@ -1,5 +1,7 @@
 using PJT250217;
+using SDL2;
 using System.Data;
+using System.Net.NetworkInformation;
 using System.Text;
 
 namespace L20250217
@@ -26,6 +28,39 @@ namespace L20250217
         }
 
         protected bool isRunning = true;
+        public IntPtr myWindow;
+        public IntPtr myRenderer;
+        public SDL.SDL_Event myEvent;
+
+        public bool Init()
+        {
+            if (SDL.SDL_Init(SDL.SDL_INIT_EVERYTHING) < 0)
+            {
+                Console.WriteLine("Fail Init.");
+                return false;
+            }
+
+            myWindow = SDL.SDL_CreateWindow( // 메모리 포인터로 창 생성 위치 설정
+                "Game",     // 창 title
+                100, 100,   // 창 생성 위치
+                640, 480,   // 창 크기
+                SDL.SDL_WindowFlags.SDL_WINDOW_SHOWN);
+
+            myRenderer = SDL.SDL_CreateRenderer(myWindow, -1, SDL.SDL_RendererFlags.SDL_RENDERER_ACCELERATED |
+                SDL.SDL_RendererFlags.SDL_RENDERER_PRESENTVSYNC |
+                SDL.SDL_RendererFlags.SDL_RENDERER_TARGETTEXTURE);
+
+            return true;
+        }
+
+        public bool Quit()
+        {
+            SDL.SDL_DestroyRenderer(myRenderer);
+            SDL.SDL_DestroyWindow(myWindow);
+
+            SDL.SDL_Quit();
+            return true;
+        }
 
         protected ConsoleKeyInfo keyInfo;
 
@@ -139,6 +174,10 @@ namespace L20250217
         {
             // io 가 제일 느림, 특히 모니터 출력이 제일 느림
             // Console.Clear(); 화면 지우는 것 또한 작업이 느림
+
+            SDL.SDL_SetRenderDrawColor(myRenderer, 0, 0, 0, 0);
+            SDL.SDL_RenderClear(myRenderer);
+
             world.Render();
 
             for (int Y = 0; Y < 20; ++Y)
@@ -153,29 +192,28 @@ namespace L20250217
                     }
                 }
             }
+            SDL.SDL_RenderPresent(myRenderer);
         }
 
         public void Run()
         {
-            float frameTime = 1000.0f / 60.0f;
-            double elapsedTime = 0.0;
-
             Console.CursorVisible = false;
+
             while (isRunning)
             {
+                SDL.SDL_PollEvent(out myEvent);
+
                 Time.Update();
-                //if (elapsedTime >= frameTime)
-                //{
-                    ProcessInput();
-                    Update();
-                    Render();
-                    Input.ClearInput();
-                    //elapsedTime = 0;
-                //}
-                //else
-                //{
-                //    elapsedTime += Time.deltaTime;
-                //}
+
+                switch (myEvent.type)
+                {
+                    case SDL.SDL_EventType.SDL_QUIT:
+                        isRunning = false;
+                        break;
+                }
+
+                Update();
+                Render();
             }
         }
     }

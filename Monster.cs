@@ -11,6 +11,10 @@ namespace L20250217
     {
         private Random rand = new Random();
 
+
+        private float elapsedTime = 0;
+
+
         public Monster(int inX, int inY, char inShape)
         {
             X = inX;
@@ -18,16 +22,18 @@ namespace L20250217
             Shape = inShape;
             orderLayer = 5;
             isTrigger = true;
+            
+            color.r = 100;
+            color.g = 100;
+            color.b = 100;
         }
-
-        private double elapsedTime = 0.0;
 
         public override void Update()
         {
-            if (elapsedTime > 500.0f)
+            if (elapsedTime >= 500.0f)
             {
-                elapsedTime = 0.0f;
                 int Direction = rand.Next(0, 4);
+
                 if (Direction == 0)
                 {
                     if (!PredictCollision(X, Y - 1))
@@ -56,11 +62,15 @@ namespace L20250217
                         X++;
                     }
                 }
+                elapsedTime = 0;
             }
             else
             {
                 elapsedTime += Time.deltaTime;
             }
+
+            Console.SetCursorPosition(30, 10);
+            Console.Write(Time.deltaTime);
         }
     }
 }

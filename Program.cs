@@ -6,11 +6,16 @@ namespace L20250217
     {
         static void Main(string[] args)
         {
-            Engine engine = Engine.Instance;
+            Engine.Instance.Init();
+            Engine.Instance.Load("level02.map");
+            Engine.Instance.Run();
+            Engine.Instance.Quit();
 
-            engine.Load("level02.map");
+            //Engine engine = Engine.Instance;
 
-            engine.Run();
+            //engine.Load("level02.map");
+
+            //engine.Run();
 
             //engine.Stop();
 

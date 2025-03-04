@@ -1,20 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PJT250217
+namespace L20250217
 {
     public class Time
     {
-        public static double deltaTime
+        public static float deltaTime
         {
             get
             {
-                return deltaTimeSpan.TotalMilliseconds;
+                return (float)deltaTimeSpan.TotalMilliseconds;
             }
+
         }
 
         protected static TimeSpan deltaTimeSpan;
