@@ -1,3 +1,4 @@
+using PJT250217;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,21 +7,10 @@ using System.Threading.Tasks;
 
 namespace L20250217
 {
-    public class Goal : GameObject
+    public class Goal : Component
     {
-        public Goal(int inX, int inY, char inShape)
+        public override void Update()
         {
-            //X = inX;
-            //Y = inY;
-            //Shape = inShape;
-            //orderLayer = 3;
-            //isTrigger = true;
-
-            //color.r = 0;
-            //color.g = 255;
-            //color.b = 0;
-
-            //LoadBmp("data/goal.bmp");
         }
     }
 }

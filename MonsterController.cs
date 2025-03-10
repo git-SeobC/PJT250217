@@ -7,28 +7,12 @@ using System.Threading.Tasks;
 
 namespace L20250217
 {
-    public class Monster : GameObject
+    public class MonsterController : Component
     {
         private Random rand = new Random();
 
 
         private float elapsedTime = 0;
-
-
-        public Monster(int inX, int inY, char inShape)
-        {
-            //X = inX;
-            //Y = inY;
-            //Shape = inShape;
-            //orderLayer = 5;
-            //isTrigger = true;
-            
-            //color.r = 100;
-            //color.g = 100;
-            //color.b = 100;
-
-            //LoadBmp("data/monster.bmp");
-        }
 
         public override void Update()
         {

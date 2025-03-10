@@ -1,3 +1,4 @@
+using PJT250217;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,21 +7,10 @@ using System.Threading.Tasks;
 
 namespace L20250217
 {
-    public class Wall : GameObject
+    public class Wall : Component
     {
-        public Wall(int inX, int inY, char inShape)
+        public override void Update()
         {
-            //X = inX;
-            //Y = inY;
-            //Shape = inShape;
-            //orderLayer = 2;
-            //isCollide = true;
-
-            //color.r = 255;
-            //color.g = 0;
-            //color.b = 0;
-
-            //LoadBmp("data/wall.bmp");
         }
     }
 }
