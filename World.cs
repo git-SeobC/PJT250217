@@ -12,6 +12,7 @@ namespace L20250217
         //public GameObject[] gameObjects = new GameObject[100];
         //int useGameObjectCount = 0;
         List<GameObject> gameObjects = new List<GameObject>();
+        List<GameObject> renderObjList = new List<GameObject>();
 
         public List<GameObject> GetGameObjects
         {
@@ -41,30 +42,42 @@ namespace L20250217
 
         public void Render()
         {
-            for (int i = 0; i < gameObjects.Count; i++)
+            foreach (var renderObj in renderObjList)
             {
-                SpriteRenderer spriteRender = gameObjects[i].GetComponent<SpriteRenderer>();
-                if (spriteRender != null)
-                {
-                    spriteRender.Render();
-                }
+                SpriteRenderer spriteRender = renderObj.GetComponent<SpriteRenderer>();
+                spriteRender.Render();
             }
         }
 
         public void Sort()
         {
-            //for (int i = 0; i < gameObjects.Count; i++)
-            //{
-            //    for (int j = i + 1; j < gameObjects.Count; j++)
-            //    {
-            //        if (gameObjects[i].orderLayer - gameObjects[j].orderLayer > 0)
-            //        {
-            //            GameObject temp = gameObjects[i];
-            //            gameObjects[i] = gameObjects[j];
-            //            gameObjects[j] = temp;
-            //        }
-            //    }
-            //}
+            for (int i = 0; i < gameObjects.Count; i++)
+            {
+                SpriteRenderer spr = gameObjects[i].GetComponent<SpriteRenderer>();
+
+                if (spr == null)
+                {
+                    continue;
+                }
+
+                renderObjList.Add(gameObjects[i]);
+            }
+
+            for (int i = 0; i < renderObjList.Count; i++)
+            {
+                for (int j = i + 1; j < renderObjList.Count; j++)
+                {
+                    SpriteRenderer spr1 = renderObjList[i].GetComponent<SpriteRenderer>();
+                    SpriteRenderer spr2 = renderObjList[j].GetComponent<SpriteRenderer>();
+
+                    if (spr1.orderLayer - spr2.orderLayer > 0)
+                    {
+                        GameObject temp = renderObjList[i];
+                        renderObjList[i] = renderObjList[j];
+                        renderObjList[j] = temp;
+                    }
+                }
+            }
         }
 
     }

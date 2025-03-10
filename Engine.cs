@@ -140,7 +140,9 @@ namespace L20250217
                         spriteRenderer.colorKey.r = 255;
                         spriteRenderer.colorKey.g = 255;
                         spriteRenderer.colorKey.b = 255;
-                        spriteRenderer.colorKey.r = 255;
+                        spriteRenderer.colorKey.a = 255;
+                        spriteRenderer.orderLayer = 1;
+
                         spriteRenderer.LoadBmp("wall.bmp");
 
                         world.Instanciate(wall);
@@ -150,20 +152,6 @@ namespace L20250217
                         //Floor floor = new Floor(x, y, scene[y][x]);
                         //world.Instanciate(floor);
 
-                        GameObject floor = new GameObject();
-                        floor.Name = "Floor";
-                        floor.transform.X = x;
-                        floor.transform.Y = y;
-
-                        floor.AddComponent<Floor>(new Floor());
-                        SpriteRenderer spriteRenderer = floor.AddComponent<SpriteRenderer>(new SpriteRenderer());
-                        spriteRenderer.colorKey.r = 255;
-                        spriteRenderer.colorKey.g = 255;
-                        spriteRenderer.colorKey.b = 255;
-                        spriteRenderer.colorKey.r = 255;
-                        spriteRenderer.LoadBmp("floor.bmp");
-
-                        world.Instanciate(floor);
                     }
                     else if (scene[y][x] == 'P')
                     {
@@ -177,7 +165,9 @@ namespace L20250217
                         spriteRenderer.colorKey.r = 255;
                         spriteRenderer.colorKey.g = 0;
                         spriteRenderer.colorKey.b = 255;
-                        spriteRenderer.colorKey.r = 255;
+                        spriteRenderer.colorKey.a = 255;
+                        spriteRenderer.orderLayer = 5;
+
                         spriteRenderer.LoadBmp("player.bmp", true);
                         spriteRenderer.processTime = 150.0f;
 
@@ -195,7 +185,9 @@ namespace L20250217
                         spriteRenderer.colorKey.r = 255;
                         spriteRenderer.colorKey.g = 255;
                         spriteRenderer.colorKey.b = 255;
-                        spriteRenderer.colorKey.r = 255;
+                        spriteRenderer.colorKey.a = 255;
+                        spriteRenderer.orderLayer = 4;
+
                         spriteRenderer.LoadBmp("monster.bmp");
 
                         world.Instanciate(monster);
@@ -214,13 +206,30 @@ namespace L20250217
                         spriteRenderer.colorKey.r = 255;
                         spriteRenderer.colorKey.g = 255;
                         spriteRenderer.colorKey.b = 255;
-                        spriteRenderer.colorKey.r = 255;
+                        spriteRenderer.colorKey.a = 255;
+                        spriteRenderer.orderLayer = 3;
                         spriteRenderer.LoadBmp("goal.bmp");
 
                         world.Instanciate(goal);
                     }
                     //Floor floor = new Floor(x, y, ' ');
                     //world.Instanciate(floor);
+
+                    GameObject floor = new GameObject();
+                    floor.Name = "Floor";
+                    floor.transform.X = x;
+                    floor.transform.Y = y;
+
+                    floor.AddComponent<Floor>(new Floor());
+                    SpriteRenderer spriteRenderer2 = floor.AddComponent<SpriteRenderer>(new SpriteRenderer());
+                    spriteRenderer2.colorKey.r = 255;
+                    spriteRenderer2.colorKey.g = 255;
+                    spriteRenderer2.colorKey.b = 255;
+                    spriteRenderer2.colorKey.a = 255;
+                    spriteRenderer2.orderLayer = 0;
+                    spriteRenderer2.LoadBmp("floor.bmp");
+
+                    world.Instanciate(floor);
                 }
             }
 
