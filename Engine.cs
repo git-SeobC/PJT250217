@@ -137,12 +137,37 @@ namespace L20250217
                     }
                     else if (scene[y][x] == 'P')
                     {
-                        Player player = new Player(x, y, scene[y][x]);
+                        GameObject player = new GameObject();
+                        player.Name = "Player";
+                        player.transform.X = x;
+                        player.transform.Y = y;
+
+                        player.AddComponent<PlayerContorller>(new PlayerContorller());
+                        SpriteRenderer spriteRenderer = player.AddComponent<SpriteRenderer>(new SpriteRenderer());
+                        spriteRenderer.colorKey.r = 255;
+                        spriteRenderer.colorKey.g = 0;
+                        spriteRenderer.colorKey.b = 255;
+                        spriteRenderer.colorKey.r = 255;
+                        spriteRenderer.LoadBmp("player.bmp", true);
+                        spriteRenderer.processTime = 150.0f;
+
                         world.Instanciate(player);
                     }
                     else if (scene[y][x] == 'M')
                     {
-                        Monster monster = new Monster(x, y, scene[y][x]);
+                        GameObject monster = new GameObject();
+                        monster.Name = "Monster";
+                        monster.transform.X = x;
+                        monster.transform.Y = y;
+
+                        monster.AddComponent<PlayerContorller>(new PlayerContorller());
+                        SpriteRenderer spriteRenderer = monster.AddComponent<SpriteRenderer>(new SpriteRenderer());
+                        spriteRenderer.colorKey.r = 255;
+                        spriteRenderer.colorKey.g = 255;
+                        spriteRenderer.colorKey.b = 255;
+                        spriteRenderer.colorKey.r = 255;
+                        spriteRenderer.LoadBmp("monster.bmp");
+
                         world.Instanciate(monster);
                     }
                     else if (scene[y][x] == 'G')

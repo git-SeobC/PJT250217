@@ -25,14 +25,34 @@ namespace PJT250217
             //}
         }
 
-        public static bool GetKeyDown(ConsoleKey key)
+        static public bool GetKeyDown(ConsoleKey key)
         {
             return (keyInfo.Key == key);
         }
 
-        public static bool GetKeyDown(SDL.SDL_Keycode pKey)
+        static public bool GetKeyDown(SDL.SDL_Keycode key)
         {
-            return (Engine.Instance.myEvent.key.keysym.sym == pKey);
+            if (Engine.Instance.myEvent.type == SDL.SDL_EventType.SDL_KEYDOWN)
+            {
+                return (Engine.Instance.myEvent.key.keysym.sym == key);
+            }
+
+            return false;
+        }
+
+        static public bool GetKey(SDL.SDL_Keycode key)
+        {
+            return (Engine.Instance.myEvent.key.keysym.sym == key);
+        }
+
+        static public bool GetKeyUp(SDL.SDL_Keycode key)
+        {
+            if (Engine.Instance.myEvent.type == SDL.SDL_EventType.SDL_KEYUP)
+            {
+                return (Engine.Instance.myEvent.key.keysym.sym == key);
+            }
+
+            return false;
         }
 
         public static void ClearInput()
