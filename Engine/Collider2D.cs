@@ -1,16 +1,18 @@
-using PJT250217;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace L20250217
+namespace PJT250217
 {
-    public class Goal : Component
+    public class Collider2D : Component
     {
+        public bool isTrigger = false;
         public override void Update()
         {
+            
         }
     }
 }

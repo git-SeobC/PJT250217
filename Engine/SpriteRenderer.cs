@@ -1,35 +1,36 @@
-using L20250217;
 using SDL2;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PJT250217
 {
-    public class SpriteRenderer : Component
+    public class SpriteRenderer : Renderer
     {
-        public char Shape; // Mesh, Sprite
-        public SDL.SDL_Color color;
-        public int spriteSize = 30;
         public int orderLayer;
 
-        protected bool isAnimation = false;
+        public char Shape; //Mesh, Spirte
+        public SDL.SDL_Color color;
+        public int spriteSize = 30;
+
+        protected bool isAnimaion = false;
         protected IntPtr myTexture;
         protected IntPtr mySurface;
 
-        protected int spriteIndexX = 0;
-        protected int spriteIndexY = 0;
+        public int spriteIndexX = 0;
+        public int spriteIndexY = 0;
+
         public SDL.SDL_Color colorKey;
 
         protected string filename;
 
         private float elapsedTime = 0;
 
-        private SDL.SDL_Rect sourceRect; // source image
-        private SDL.SDL_Rect destinationRect; // screen size
+        private SDL.SDL_Rect sourceRect;            //source image
+        private SDL.SDL_Rect destinationRect;       //screen size
 
         public float processTime = 100.0f;
         public int maxCellCountX = 5;
@@ -40,11 +41,17 @@ namespace PJT250217
 
         }
 
+        ~SpriteRenderer()
+        {
+            SDL.SDL_DestroyTexture(myTexture);
+        }
+
         public override void Update()
         {
             int X = gameObject.transform.X;
             int Y = gameObject.transform.Y;
-            // Screen bitmap
+
+            //Screen bitmap
             destinationRect.x = X * spriteSize;
             destinationRect.y = Y * spriteSize;
             destinationRect.w = spriteSize;
@@ -52,10 +59,9 @@ namespace PJT250217
 
             unsafe
             {
-                // 이미지 정보 가져와서 할일이 있음
                 SDL.SDL_Surface* surface = (SDL.SDL_Surface*)(mySurface);
 
-                if (isAnimation)
+                if (isAnimaion)
                 {
                     if (elapsedTime >= processTime)
                     {
@@ -67,12 +73,14 @@ namespace PJT250217
                     {
                         elapsedTime += Time.deltaTime;
                     }
-                    int sizeX = surface->w / maxCellCountX;
-                    int sizeY = surface->h / maxCellCountY;
-                    sourceRect.x = sizeX * spriteIndexX;
-                    sourceRect.y = sizeY * spriteIndexY;
-                    sourceRect.w = sizeX;
-                    sourceRect.h = sizeY;
+
+
+                    int cellSizeX = surface->w / maxCellCountX;
+                    int cellSizeY = surface->h / maxCellCountY;
+                    sourceRect.x = cellSizeX * spriteIndexX;
+                    sourceRect.y = cellSizeY * spriteIndexY;
+                    sourceRect.w = cellSizeX;
+                    sourceRect.h = cellSizeY;
                 }
                 else
                 {
@@ -84,15 +92,12 @@ namespace PJT250217
             }
         }
 
-        public virtual void Render()
+        public override void Render()
         {
-            //SDL.SDL_SetRenderDrawColor(Engine.Instance.myRenderer, color.r, color.g, color.b, color.a);
-            //SDL.SDL_RenderDrawPoint(Engine.Instance.myRenderer, X, Y);
-            //SDL.SDL_RenderFillRect(Engine.Instance.myRenderer, ref myRect);
             int X = gameObject.transform.X;
             int Y = gameObject.transform.Y;
 
-            // Console print
+            //Console
             Engine.backBuffer[Y, X] = Shape;
 
             unsafe
@@ -107,19 +112,21 @@ namespace PJT250217
         public void LoadBmp(string inFilename, bool inIsAnimation = false)
         {
             string projectFolder = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
-            isAnimation = inIsAnimation;
+            isAnimaion = inIsAnimation;
             filename = inFilename;
 
-            // SDL -> C로 되어있기 때문에 접근 할 수 있는게 없음
-            mySurface = SDL.SDL_LoadBMP(projectFolder + "/data/" + inFilename);
-            unsafe // 그래서 C Pointer를 쓰기위해 unsafe 사용
+            //SDL C, 접근 할 수 있는게 없어서
+            mySurface = SDL.SDL_LoadBMP(projectFolder + "/data/" + filename);
+            unsafe
             {
-                // 이미지 정보 가져와서 할일이 있음
+                //이미지 정보 가져와서 할일이 있음
                 SDL.SDL_Surface* surface = (SDL.SDL_Surface*)(mySurface);
-                // 흰색은 그래픽 렌더링할 때 빼는 ColorKey 설정
-                SDL.SDL_SetColorKey(mySurface, 1, SDL.SDL_MapRGB(surface->format, colorKey.r, colorKey.g, colorKey.b));
+                SDL.SDL_SetColorKey(mySurface, 1, SDL.SDL_MapRGB(surface->format,
+                    colorKey.r, colorKey.g, colorKey.b));
             }
+
             myTexture = SDL.SDL_CreateTextureFromSurface(Engine.Instance.myRenderer, mySurface);
+
         }
     }
 }

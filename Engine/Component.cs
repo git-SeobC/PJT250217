@@ -1,4 +1,3 @@
-using L20250217;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,13 +17,15 @@ namespace PJT250217
 
         public GameObject gameObject;
 
+        public Transform transform;
+
         public T GetComponent<T>() where T : Component
         {
             foreach (Component component in gameObject.components)
             {
                 if (component is T)
                 {
-                    return (T)component;
+                    return component as T;
                 }
             }
             return null;

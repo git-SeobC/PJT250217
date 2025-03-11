@@ -1,16 +1,12 @@
-using PJT250217;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace L20250217
+namespace PJT250217
 {
-    public class Wall : Component
+    public class BoxCollider2D : Collider2D
     {
-        public override void Update()
-        {
-        }
     }
 }

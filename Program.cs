@@ -1,8 +1,33 @@
+using System.Data;
 using System.Reflection;
 using System.Security.Cryptography;
 
-namespace L20250217
+namespace PJT250217
 {
+
+    #region delegate
+    //public class Sample
+    //{
+    //    public delegate int Command(int a, int b);
+    //    public Command command;
+    //    public void Sort()
+    //    {
+    //        if (command(1, 2) > 0)
+    //        {
+
+    //        }
+    //    }
+    //}
+    #endregion
+
+    #region Event example
+    //public class EventClass
+    //{
+    //    public delegate void DelegateSample();
+    //    public event DelegateSample EventSample;
+    //}
+    #endregion
+
     internal class Program
     {
         #region Reflection
@@ -47,8 +72,59 @@ namespace L20250217
         //} 
         #endregion
 
+        #region delegate
+        //static int Add(int A, int B)
+        //      {
+        //          return A + B;
+        //      }
+
+        //      static int Sub(int A, int B)
+        //      {
+        //          return A - B;
+        //      } 
+        #endregion
+
+        #region Action, Func
+        //public static void Test()
+        //{
+        //    Console.WriteLine("TTT");
+        //}
+        //public static void Test1(int a)
+        //{
+        //    Console.WriteLine($"TTT{a}");
+        //}
+
+        //public static int Test2(int a)
+        //{
+        //    Console.WriteLine($"TTT{a}");
+        //    return a;
+        //} 
+        #endregion
+
+        public static int Compare(GameObject first, GameObject second)
+        {
+            SpriteRenderer spr1 = first.GetComponent<SpriteRenderer>();
+            SpriteRenderer spr2 = second.GetComponent<SpriteRenderer>();
+            if (spr1 == null || spr2 == null)
+            {
+                return 0;
+            }
+            return spr1.orderLayer - spr2.orderLayer;
+        }
+
         static void Main(string[] args)
         {
+            #region Action,Func
+            //Action helloAction = Test;
+            //Action<int> helloAction1 = Test1;
+            //Func<int, int> f = Test2;
+            //f += (int number) =>
+            //{
+            //    Console.WriteLine($"number {number}");
+            //    return 10;
+            //};
+            //Console.WriteLine(f(2));
+            #endregion
             #region Reflection
             //Data d = new Data();
             //Type classType = d.GetType();
@@ -93,12 +169,14 @@ namespace L20250217
 
             //}
             #endregion
+            #region deleagate
+            //Sample.Command command = new Sample.Command((int A, int B) => { return A * B; });
+            //Console.WriteLine(command(1, 2));
 
-            Engine.Instance.Init();
-            Engine.Instance.Load("level02.map");
-            Engine.Instance.Run();
-            Engine.Instance.Quit();
-
+            //Sample sample = new Sample();
+            //sample.command = Add;
+            //sample.Sort(); 
+            #endregion
             #region MyRegion
             //Engine engine = Engine.Instance;
 
@@ -136,7 +214,6 @@ namespace L20250217
             //Console.WriteLine(scene);
 
             #endregion
-
             #region
             //1 -> 10 ; 올림차순
             //10 -> 1 ; 내림차순
@@ -158,6 +235,12 @@ namespace L20250217
             //    Console.Write(numbers[i] + ", ");
             //}
             #endregion
+
+            Engine.Instance.Init();
+            Engine.Instance.SetSortCompare(Compare);
+            Engine.Instance.Load("level02.map");
+            Engine.Instance.Run();
+            Engine.Instance.Quit();
         }
     }
 }

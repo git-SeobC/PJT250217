@@ -1,4 +1,3 @@
-using L20250217;
 using SDL2;
 using System;
 using System.Collections.Generic;
@@ -15,8 +14,6 @@ namespace PJT250217
 
         }
 
-        protected static ConsoleKeyInfo keyInfo;
-
         public static void Process()
         {
             //if (Console.KeyAvailable)
@@ -24,6 +21,8 @@ namespace PJT250217
             //    keyInfo = Console.ReadKey(true);
             //}
         }
+
+        protected static ConsoleKeyInfo keyInfo;
 
         static public bool GetKeyDown(ConsoleKey key)
         {
