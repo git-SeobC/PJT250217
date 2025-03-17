@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using SDL2;
 using System;
 using System.Drawing;
@@ -236,6 +237,29 @@ namespace PJT250217
             world.Sort();
 
             Awake();
+
+            //string SceneFile = JsonConvert.SerializeObject(world.GetAllGameObjects, new JsonSerializerSettings
+            //{
+            //    TypeNameHandling = TypeNameHandling.All,
+            //    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            //});
+            //Console.WriteLine(SceneFile);
+
+            //StreamWriter sw = new StreamWriter("Sample.uasset");
+            //sw.WriteLine(SceneFile);
+            //sw.Close(); 
+            
+            // 파일 읽기
+            StreamReader sr2 = new StreamReader("Sample.uasset");
+            string SceneFile = sr2.ReadToEnd();
+            sr2.Close();
+
+            world.GetAllGameObjects = JsonConvert.DeserializeObject<List<GameObject>>(SceneFile, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.All,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+
         }
 
         public void ProcessInput()
